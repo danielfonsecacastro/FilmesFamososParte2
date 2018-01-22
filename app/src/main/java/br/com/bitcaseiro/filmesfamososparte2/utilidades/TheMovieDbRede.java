@@ -10,13 +10,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import br.com.bitcaseiro.filmesfamososparte2.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class TheMovieDbRede {
 
-    private static final String API_KEY = "SUA KEY";
+    private static final String API_KEY = BuildConfig.MOVIESDB_API_KEY;
 
     public static URL construirUrlPopulares() {
         return construirUrl("https://api.themoviedb.org/3/movie/popular");
@@ -100,9 +101,9 @@ public class TheMovieDbRede {
         return url;
     }
 
-    public static boolean temConexaoComInternet(Activity activity) {
+    public static boolean temConexaoComInternet(Context context) {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }

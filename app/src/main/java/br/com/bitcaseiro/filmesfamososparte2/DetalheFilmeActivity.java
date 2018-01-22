@@ -45,8 +45,10 @@ public class DetalheFilmeActivity extends AppCompatActivity
     private final String CONSULTA_FILME = "CONSULTA_FILME";
     private final String CONSULTA_TRAILER = "CONSULTA_TRAILER";
     private final String CONSULTA_RESENHAS = "CONSULTA_RESENHAS";
-    private ImageView mPosterImageView;
+    private final String WEB_URI_YOUTUBE = "http://www.youtube.com/watch?v=";
+    private final String APP_URI_YOUTUBE = "vnd.youtube:";
 
+    private ImageView mPosterImageView;
     private ArrayList<Trailer> mTrailers;
     private ArrayList<Resenha> mResenhas;
     private Filme mFilme;
@@ -114,6 +116,9 @@ public class DetalheFilmeActivity extends AppCompatActivity
             mFilme.setTituloOriginal(cursor.getString(cursor.getColumnIndex(FavoritoContract.FavoritoEntry.COLUMN_TITULO_ORIGINAL)));
             preencherFilme();
             cursor.close();
+        } else {
+            Toast.makeText(this, getText(R.string.aviso_sem_internet), Toast.LENGTH_LONG).show();
+            findViewById(R.id.pb_carregando_detalhe).setVisibility(ProgressBar.INVISIBLE);
         }
     }
 
@@ -235,8 +240,8 @@ public class DetalheFilmeActivity extends AppCompatActivity
 
     @Override
     public void onClick(Trailer trailer) {
-        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + trailer.getKey()));
-        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + trailer.getKey()));
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(APP_URI_YOUTUBE + trailer.getKey()));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(WEB_URI_YOUTUBE + trailer.getKey()));
 
         try {
             getApplicationContext().startActivity(appIntent);
@@ -310,7 +315,7 @@ public class DetalheFilmeActivity extends AppCompatActivity
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, getBaseContext().getString(R.string.compartilhar_url));
-                intent.putExtra(Intent.EXTRA_TEXT, "http://www.youtube.com/watch?v=" + mTrailers.get(0).getSite());
+                intent.putExtra(Intent.EXTRA_TEXT, WEB_URI_YOUTUBE + mTrailers.get(0).getSite());
                 startActivity(Intent.createChooser(intent, getBaseContext().getString(R.string.compartilhar_url)));
             } else {
                 Toast.makeText(getBaseContext(), getBaseContext().getText(R.string.trailer_nao_encontrado), Toast.LENGTH_LONG).show();

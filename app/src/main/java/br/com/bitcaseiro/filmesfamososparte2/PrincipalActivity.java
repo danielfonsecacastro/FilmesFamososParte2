@@ -176,15 +176,19 @@ public class PrincipalActivity extends AppCompatActivity implements FilmeAdapter
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (R.id.acao_populares == item.getItemId()) {
-            carregarPopulares();
-            return true;
-        }
+       if(TheMovieDbRede.temConexaoComInternet(this)) {
+           if (R.id.acao_populares == item.getItemId()) {
+               carregarPopulares();
+               return true;
+           }
 
-        if (R.id.acao_recomendados == item.getItemId()) {
-            carregarRecomendados();
-            return true;
-        }
+           if (R.id.acao_recomendados == item.getItemId()) {
+               carregarRecomendados();
+               return true;
+           }
+       }else{
+           Toast.makeText(this,this.getText(R.string.aviso_sem_internet),Toast.LENGTH_LONG).show();
+       }
 
         if (R.id.acao_favoritos == item.getItemId()) {
             carregarFavoritos();
