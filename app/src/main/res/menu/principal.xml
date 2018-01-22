@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PrincipalActivity">
+    <item
+        android:id="@+id/acao_populares"
+        android:orderInCategory="1"
+        android:title="@string/order_mais_popular"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/acao_recomendados"
+        android:orderInCategory="1"
+        android:title="@string/order_melhor_avaliacao"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/acao_favoritos"
+        android:orderInCategory="1"
+        android:title="@string/favoritos"
+        app:showAsAction="never"/>
+</menu>

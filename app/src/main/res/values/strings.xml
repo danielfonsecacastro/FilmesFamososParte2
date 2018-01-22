@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Filmes Famosos</string>
+    <string name="active_title">Filmes Famosos - %1$s</string>
+
+    <!--Menu-->
+    <string name="order_mais_popular">Populares</string>
+    <string name="order_melhor_avaliacao">Recomendados</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="compartilhar">Compartilhar</string>
+
+    <string name="mensagem_erro">Um erro ocorreu. Por favor verifique sua internet e tente novamente</string>
+    <string name="aviso_sem_internet">Não temos conexão com a internet, por isso só posso exibir os seus filmes favoritos</string>
+    <string name="compartilhar_url">Compartilhar URL</string>
+
+    <string name="duracao">%1$s min</string>
+    <string name="data_lancamento">%1$s</string>
+    <string name="avaliacao">%1$s/10</string>
+    <string name="popularidade">Popularidade : %1$s</string>
+
+    <!--detalhes activity-->
+    <string name="trailers">Trailes</string>
+    <string name="trailer_nao_encontrado">Não encontramos nenhum trailer para esse filme</string>
+    <string name="msg_filme_salvo">Ok! Filme salvo nos favoritos</string>
+    <string name="msg_filme_removido">Removi o filme da sua lista de favoritos!</string>
+    <string name="resenhas">Resenhas</string>
+    <string name="resenha_nao_encontrada">Não encontramos resenha para esse filme</string>
+    <string name="autor">Autor : %1$s</string>
+
+    <!--Content Descriptions-->
+    <string name="poster_descricao">poster do filme</string>
+    <string name="adicionar_favorito_descricao">adicionar aos favoritos</string>
+    <string name="remover_favorito_descricao">remover dos favoritos</string>
+    <string name="ver_trailer_descricao">visualizar trailer</string>
+
+    <!--content provider-->
+    <string name="uri_desconhecida">URI desconhecida : %1$s</string>
+    <string name="nao_suportado">Método não suportado</string>
+    <string name="uri_falha">Falha ao executar a URI : %1$s</string>
+</resources>
