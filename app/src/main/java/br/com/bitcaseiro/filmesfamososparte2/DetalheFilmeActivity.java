@@ -319,7 +319,24 @@ public class DetalheFilmeActivity extends AppCompatActivity
             return true;
         }
 
+        if (android.R.id.home == item.getItemId()) {
+            onBackPressed();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Bundle data = getIntent().getExtras();
+
+        Intent intent = new Intent();
+        intent.putExtra("ULTIMA_ORDENACAO", data.getString("ULTIMA_ORDENACAO"));
+        setResult(RESULT_OK, intent);
+        finish();
+
+        super.onBackPressed();
     }
 
 }

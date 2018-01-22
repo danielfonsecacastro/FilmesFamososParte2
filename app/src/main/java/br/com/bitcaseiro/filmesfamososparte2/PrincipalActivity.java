@@ -36,6 +36,7 @@ public class PrincipalActivity extends AppCompatActivity implements FilmeAdapter
     private static final String POPULARES = "Populares";
     private static final String RECOMENDADOS = "Recomendados";
     private static final String FAVORITOS = "Favoritos";
+    private static final int REQUEST_CODE_FILME = 888;
 
     private FilmeAdapter mFilmeAdapter;
     private ProgressBar mCarregandoProgressBar;
@@ -96,7 +97,7 @@ public class PrincipalActivity extends AppCompatActivity implements FilmeAdapter
             }
 
         } else {
-            Toast.makeText(getApplicationContext(),getBaseContext().getString(R.string.aviso_sem_internet) , Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getBaseContext().getString(R.string.aviso_sem_internet), Toast.LENGTH_LONG).show();
             carregarFavoritos();
         }
     }
@@ -142,23 +143,22 @@ public class PrincipalActivity extends AppCompatActivity implements FilmeAdapter
             setTitle(String.format(getBaseContext().getString(R.string.active_title), FAVORITOS));
             mUltimaOrdenacao = FAVORITOS;
 
-            if (mFilmesFavoritos == null) {
-                mCarregandoProgressBar.setVisibility(View.VISIBLE);
-                Cursor cursor = getContentResolver().query(FavoritoContract.FavoritoEntry.CONTENT_URI, FavoritoContract.FavoritoEntry.colunas(),
-                        null, null, null);
+            mCarregandoProgressBar.setVisibility(View.VISIBLE);
+            Cursor cursor = getContentResolver().query(FavoritoContract.FavoritoEntry.CONTENT_URI, FavoritoContract.FavoritoEntry.colunas(),
+                    null, null, null);
 
-                if (cursor != null && cursor.moveToFirst()) {
-                    mFilmesFavoritos = new ArrayList<>();
-                    do {
-                        Filme filme = new Filme();
-                        filme.setFilmeId(cursor.getInt(cursor.getColumnIndex(FavoritoContract.FavoritoEntry.COLUMN_FILME_ID)));
-                        filme.setPosterBytes(cursor.getBlob(cursor.getColumnIndex(FavoritoContract.FavoritoEntry.COLUMN_POSTER)));
+            mFilmesFavoritos = new ArrayList<>();
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Filme filme = new Filme();
+                    filme.setFilmeId(cursor.getInt(cursor.getColumnIndex(FavoritoContract.FavoritoEntry.COLUMN_FILME_ID)));
+                    filme.setPosterBytes(cursor.getBlob(cursor.getColumnIndex(FavoritoContract.FavoritoEntry.COLUMN_POSTER)));
 
-                        mFilmesFavoritos.add(filme);
-                    } while (cursor.moveToNext());
-                    cursor.close();
-                }
+                    mFilmesFavoritos.add(filme);
+                } while (cursor.moveToNext());
+                cursor.close();
             }
+
 
             mCarregandoProgressBar.setVisibility(View.INVISIBLE);
             mFilmeAdapter.setFilmes(mFilmesFavoritos);
@@ -198,7 +198,19 @@ public class PrincipalActivity extends AppCompatActivity implements FilmeAdapter
     public void onClick(Filme filme) {
         Intent intent = new Intent(this, DetalheFilmeActivity.class);
         intent.putExtra("FILME", filme);
-        startActivity(intent);
+        intent.putExtra(ULTIMA_ORDENACAO, mUltimaOrdenacao);
+        startActivityForResult(intent, REQUEST_CODE_FILME);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_FILME && resultCode == RESULT_OK) {
+            mUltimaOrdenacao = data.getStringExtra(ULTIMA_ORDENACAO);
+
+            if(mUltimaOrdenacao.equals(FAVORITOS))
+                carregarFavoritos();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
